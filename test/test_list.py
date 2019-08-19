@@ -16,13 +16,13 @@ from ylist import YList
 
 class TestYList(unittest.TestCase):
     def setUp(self):
-        self.ylist = YList("C:\\Users\\sukju\\Downloads")
+        self.ylist = YList()
 
     def tearDown(self):
         pass
 
     def test_list(self):
-        items = self.ylist.get_list()
+        items = self.ylist.get_list("C:\\Users\\sukju\\Downloads")
         self.assertIsNotNone(items)
         self.assertEqual(len(items), 3)
         for item in items:

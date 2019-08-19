@@ -9,27 +9,13 @@ class YList:
     """ 폴더내의 영상 파일과 snapshot, gallery 경로를 찾아
     list 를 생성한다.
     """
-    def __init__(self, root_path):
-        self.root_path = root_path
+    def __init__(self):
         self.mov_ext = ".mp4"
         self.shot_ext = ".jpg"
 
-    def _get_gallery(self, shots_path):
-        shots = []
-        if not os.path.exists(shots_path):
-            log.warning("shots path not exist. path=%s", shots_path)
-            return shots
-
-        for path, dir, files in os.walk(shots_path):
-            for filename in files:
-                if not filename.endswith(self.shot_ext):
-                    continue
-                shots.append(os.path.join(path, filename))
-        return shots
-
-    def get_list(self):
+    def get_list(self, root_path):
         res = []
-        for path, dir, files in os.walk(self.root_path):
+        for path, dir, files in os.walk(root_path):
             for filename in files:
                 if not filename.endswith(self.mov_ext):
                     continue
@@ -46,3 +32,16 @@ class YList:
                 })
 
         return res
+
+    def _get_gallery(self, shots_path):
+        shots = []
+        if not os.path.exists(shots_path):
+            log.warning("shots path not exist. path=%s", shots_path)
+            return shots
+
+        for path, dir, files in os.walk(shots_path):
+            for filename in files:
+                if not filename.endswith(self.shot_ext):
+                    continue
+                shots.append(os.path.join(path, filename))
+        return shots
