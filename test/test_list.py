@@ -14,6 +14,8 @@ sys.path.append(base_path)
 
 from ylist import YList
 
+root_path = os.path.join(cur_path, "root_path")
+
 class TestYList(unittest.TestCase):
     def setUp(self):
         self.ylist = YList()
@@ -22,12 +24,10 @@ class TestYList(unittest.TestCase):
         pass
 
     def test_list(self):
-        items = self.ylist.get_list("C:\\Users\\sukju\\Downloads")
+        items = self.ylist.get_list(root_path)
         self.assertIsNotNone(items)
-        self.assertEqual(len(items), 3)
-        for item in items:
-            self.assertTrue(os.path.exists(item["filepath"]))
-            self.assertTrue(os.path.exists(item["snapshot"]))
+        self.assertEqual(len(items), 2)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -15,15 +15,18 @@ class YList:
 
     def get_list(self, root_path):
         res = []
+        self.root_path = root_path
         for path, dir, files in os.walk(root_path):
             for filename in files:
                 if not filename.endswith(self.mov_ext):
                     continue
                 
                 filepath = os.path.join(path, filename)
+                filepath = os.path.relpath(filepath, root_path).replace("\\", "/")
                 filename_without_ext = filename.replace(self.mov_ext, "")
                 snapshot_name = f"{filename_without_ext}_Snapshot{self.shot_ext}"
                 snapshot_path = os.path.join(path, snapshot_name)
+                snapshot_path = os.path.relpath(snapshot_path, root_path).replace("\\", "/")
                 shots_path = os.path.join(path, filename_without_ext)
 
                 res.append({
@@ -43,5 +46,7 @@ class YList:
             for filename in files:
                 if not filename.endswith(self.shot_ext):
                     continue
-                shots.append(os.path.join(path, filename))
+                shots_path = os.path.join(path, filename)
+                shots_path = os.path.relpath(shots_path, self.root_path).replace("\\", "/")
+                shots.append(shots_path)
         return shots
